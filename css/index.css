@@ -1,34 +1,76 @@
 :root {
     --image-size: 120px;
+    --font-size: 30px;
+    --font-color: #ffffff;
+    --shadow-radius: 10px;
+    --shadow-color: #00000099;
 }
 
 body{
+    display: flex;
     margin: 0;
-    padding: 10px;
+    background: transparent;
+}
 
-    font-family: "Asap", system-ui;
+.container{
+    flex: 1;
+    width: 100vw;
+    padding: var(--shadow-radius);
 }
 
 .columns{
     display: grid;
-    grid-template-columns: var(--image-size) 1fr 1fr var(--image-size);
-    height: var(--image-size);
+    grid-template-columns: var(--image-size) minmax(0, 1fr) minmax(0, 1fr) var(--image-size);
+    grid-template-rows: var(--image-size);
     gap: 0 3ch;
+    width: 100%;
 }
 
 .flex {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 5px 0;
+    gap: 0;
+}
+
+.flex.left{
+    margin-inline-start: calc(var(--shadow-radius) * -1);
 }
 
 .flex.right{
+    text-align: end;
     align-items: end;
+    margin-inline-end: calc(var(--shadow-radius) * -1);
 }
 
 img{
     display: block;
+    aspect-ratio: 1;
+    box-shadow: 0 0 var(--shadow-radius) var(--shadow-color);
+    border-radius: 5px;
+}
+
+.row {
+    font-family: "Asap", system-ui;
+    font-size: var(--font-size);
+    color: var(--font-color);
+    padding: calc(var(--shadow-radius) * 0.5) var(--shadow-radius);
+    overflow-x: hidden;
+    text-shadow: 0 0 var(--shadow-radius) var(--shadow-color);
+    min-width: 0;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1;
+    width: 100%;
+    max-width: 35ch;
+}
+
+.row-1 {
+    font-weight: 700;
+}
+
+.row-3 {
+    font-size: calc(var(--font-size) * 0.8);
 }
 
 @font-face {
