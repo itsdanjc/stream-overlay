@@ -1,3 +1,5 @@
+import { Message } from "./message.js";
+
 const CONFIG_STATION_ID = "5188";
 const websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
 
@@ -11,7 +13,10 @@ websocket.onopen = function() {
 }
 
 websocket.onmessage = function(event){
-    console.log(event);
+    const msg = JSON.parse(event.data)
+    console.log(
+        Message(msg)
+    );
 }
 
 websocket.onerror = function(err){
