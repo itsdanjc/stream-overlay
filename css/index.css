@@ -1,3 +1,36 @@
+:root {
+    --image-size: 120px;
+}
+
+body{
+    margin: 0;
+    padding: 10px;
+
+    font-family: "Asap", system-ui;
+}
+
+.columns{
+    display: grid;
+    grid-template-columns: var(--image-size) 1fr 1fr var(--image-size);
+    height: var(--image-size);
+    gap: 0 3ch;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px 0;
+}
+
+.flex.right{
+    align-items: end;
+}
+
+img{
+    display: block;
+}
+
 @font-face {
     font-family: "Asap";
     src: url("./fonts/asap/Asap-Medium.ttf");
