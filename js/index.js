@@ -1,7 +1,11 @@
 import { Message } from "./message.js";
+import { Card } from "./components.js"
 
 const CONFIG_STATION_ID = "5188";
 const websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
+
+const trackOverlay = new Card("#track");
+const programmeOverlay = new Card("#programme");
 
 websocket.onopen = function() {
     const msg = JSON.stringify({
