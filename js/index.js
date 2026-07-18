@@ -2,7 +2,6 @@ import { Message } from "./message.js";
 import { Card } from "./components.js";
 import * as config from "./config.js";
 
-const CONFIG_STATION_ID = "5188";
 const websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
 
 const trackOverlay = new Card("#track");
@@ -11,7 +10,7 @@ const programmeOverlay = new Card("#programme");
 websocket.onopen = function() {
     const msg = JSON.stringify({
         action: "subscribe",
-        serviceId: CONFIG_STATION_ID
+        serviceId: config.stationId
     })
 
     websocket.send(msg)
@@ -19,9 +18,8 @@ websocket.onopen = function() {
 
 websocket.onmessage = function(event){
     const msgJson = JSON.parse(event.data);
-    console.log(msgJson)
-
     const msg = Message(msgJson);
+
     console.log(msg)
 
     const track = msg.track ? {
