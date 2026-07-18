@@ -1,9 +1,10 @@
 .card *{
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
 }
 
 .card .row{
-    transform: translate(0px);
+    transition-timing-function: ease-out;
+    transform: translate(0%);
     opacity: 1;
 }
 
@@ -11,17 +12,21 @@
     opacity: 1;
 }
 
-.card.hidden .row,
+.card.hidden .row {
+    transition-timing-function: ease-in;
+    opacity: 0;
+}
+
 .card.hidden .thumbnail{
     opacity: 0;
 }
 
 .card.hidden.overlay-left .row{
-    transform: translate(-100px);
+    transform: translate(-75%);
 }
 
 .card.hidden.overlay-right .row{
-    transform: translate(100px);
+    transform: translate(75%);
 }
 
 .accent-container > div{
