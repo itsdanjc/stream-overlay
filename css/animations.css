@@ -23,3 +23,27 @@
 .card.hidden.overlay-right .row{
     transform: translate(100px);
 }
+
+.accent-container > div{
+    animation: accent-line 10s infinite ease-in-out;
+}
+
+@keyframes accent-line {
+    0% {
+        top: 0;
+        height: 0%;
+    }
+
+    20%,
+    50% {
+        top: 0;
+        height: 100%;
+    }
+
+    70%,
+    100% {
+        top: 100%;
+        height: 0%;
+    }
+
+}

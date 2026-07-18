@@ -2,6 +2,9 @@
 
 :root {
     --image-size: 120px;
+    --accent-size: 5px;
+    --accent-color-primary: #1f468f;
+    --accent-color-secondary: #1ab61a;
     --font-size: 30px;
     --font-color: #ffffff;
     --shadow-radius: 10px;
@@ -29,17 +32,48 @@ body{
 
 .card{
     display: grid;
+    --thumbnail-area-width: var(--image-size);
     grid-template-rows: var(--image-size);
     gap: 0 3ch;
     width: 100%;
 }
 
+.card.accent-line{
+    --thumbnail-area-width: var(--accent-size);
+}
+
 .card.overlay-left{
-    grid-template-columns: var(--image-size) minmax(0, 1fr);
+    grid-template-columns: var(--thumbnail-area-width) minmax(0, 1fr);
 }
 
 .card.overlay-right{
-    grid-template-columns: minmax(0, 1fr) var(--image-size);
+    grid-template-columns: minmax(0, 1fr) var(--thumbnail-area-width);
+}
+
+.card:not(.accent-line) .thumbnail>.accent-container{
+    display: none;
+}
+
+.card.accent-line .thumbnail>img{
+    display: none;
+}
+
+.accent-container{
+    position: relative;
+    background: var(--accent-color-primary);
+    width: var(--accent-size);
+    height: 100%;
+    box-shadow: 0 0 var(--shadow-radius) var(--shadow-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.accent-container > div{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color-secondary);
+    z-index: 1;
 }
 
 .overlay-body {
