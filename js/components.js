@@ -18,13 +18,50 @@ async function sleep(duration) {
 }
 
 /**
+ * Utility function to calculate the total transition
+ * duration of an element and its descendants.
+ * @param {Element} element Element to calculate styles.
+ * @returns {number} Duration in milliseconds.
+ */
+function getAnimationDuration(element) {
+    var duration = 0;
+
+    function parseTimes(str) {
+        return str.split(",").map(s => {
+            s = s.trim();
+
+            if(s.endsWith("ms")) return parseFloat(s);
+            return parseFloat(s) * 1000 // Return in milliseconds.
+        })
+    }
+
+    for(var child of element.querySelectorAll("*")) {
+        const styles = getComputedStyle(child);
+
+        const transDurations = parseTimes(styles.transitionDuration);
+        const transDelays = parseTimes(styles.transitionDelay);
+
+        const totals = transDurations.map(
+            (d, i) => d + (transDelays[i] || 0)
+        )
+
+        duration = Math.max(duration, ...totals);
+    }
+
+    return duration;
+}
+
+/**
  * Represents a card component.
  */
 export class Card {
     container;
+    animationDuration;
 
     constructor(selector){
         this.container = document.querySelector(selector);
+        this.animationDuration = getAnimationDuration(this.container);
+        console.log(this.animationDuration)
     }
 
     /**
@@ -45,7 +82,7 @@ export class Card {
             return sleep(0);
         
         this.container.classList.add(HIDDEN_CLASSNAME);
-        return sleep(0)
+        return sleep(this.animationDuration)
     }
 
     /**
@@ -58,7 +95,7 @@ export class Card {
             return sleep(0);
 
         this.container.classList.remove(HIDDEN_CLASSNAME);
-        return sleep(0);
+        return sleep(this.animationDuration);
     }
     
     /**
