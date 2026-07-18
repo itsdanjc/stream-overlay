@@ -52,16 +52,30 @@ function getAnimationDuration(element) {
 }
 
 /**
+ * @param {{line_1: string, line_2: string, line_3: string}} obj_1 
+ * @param {{line_1: string, line_2: string, line_3: string}} obj_2 
+ * @returns {boolean}
+ */
+function equalTo(obj_1, obj_2){
+    return(
+        obj_1 && obj_2 &&
+        obj_1.line_1 === obj_2.line_1 &&
+        obj_1.line_2 === obj_2.line_2 &&
+        obj_1.line_3 === obj_2.line_3
+    );
+}
+
+/**
  * Represents a card component.
  */
 export class Card {
     container;
     animationDuration;
+    prevContent;
 
     constructor(selector){
         this.container = document.querySelector(selector);
         this.animationDuration = getAnimationDuration(this.container);
-        console.log(this.animationDuration)
     }
 
     /**
@@ -104,12 +118,16 @@ export class Card {
      *  aaa
      */
     async update(content){
+        if (equalTo(content, this.prevContent)) return;
+
         await this.hide();
         const card = this.container;
 
         card.querySelector(".row-1").innerHTML = content.line_1;
         card.querySelector(".row-2").innerHTML = content.line_2;
         card.querySelector(".row-3").innerHTML = content.line_3;
+
+        this.prevContent = content;
 
         await this.show();
     }
