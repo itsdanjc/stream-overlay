@@ -29,9 +29,15 @@ export const Programme = (p) => ({
 
 // Object representing a websocket response message.
 export const Message = (msg) => ({
-    track: 
-        msg["nowPlaying"] ? Track(msg["nowPlaying"]) : null,
+    track: (
+        msg["nowPlaying"] && 
+        msg["nowPlaying"].type == "track"
 
-    programme: 
-        msg["nowProgramme"] ? Programme(msg["nowProgramme"]) : null,
+    ) ? Track(msg["nowPlaying"]) : null,
+
+    programme: (
+        msg["nowProgramme"] && 
+        msg["nowProgramme"].type == "programme"
+        
+    ) ? Programme(msg["nowProgramme"]) : null,
 });
