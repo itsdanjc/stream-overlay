@@ -1,0 +1,25 @@
+.card *{
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.card .row{
+    transform: translate(0px);
+    opacity: 1;
+}
+
+.card .thumbnail{
+    opacity: 1;
+}
+
+.card.hidden .row,
+.card.hidden .thumbnail{
+    opacity: 0;
+}
+
+.card.hidden.overlay-left .row{
+    transform: translate(-100px);
+}
+
+.card.hidden.overlay-right .row{
+    transform: translate(100px);
+}

@@ -1,3 +1,5 @@
+@import url("./animations.css");
+
 :root {
     --image-size: 120px;
     --font-size: 30px;
@@ -44,17 +46,20 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden visible;
     gap: 0;
 }
 
 .overlay-left>.overlay-body{
     margin-inline-start: calc(var(--shadow-radius) * -1);
+    padding-inline-end: calc(var(--shadow-radius) * 2);
 }
 
 .overlay-right>.overlay-body{
     text-align: end;
     align-items: end;
     margin-inline-end: calc(var(--shadow-radius) * -1);
+    padding-inline-start: calc(var(--shadow-radius) * 2);
 }
 
 img{
@@ -69,7 +74,7 @@ img{
     font-size: var(--font-size);
     color: var(--font-color);
     padding: calc(var(--shadow-radius) * 0.5) var(--shadow-radius);
-    overflow-x: hidden;
+    overflow: hidden visible;
     text-shadow: 0 0 var(--shadow-radius) var(--shadow-color);
     min-width: 0;
     text-wrap: nowrap;
