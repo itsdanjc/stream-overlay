@@ -25,18 +25,18 @@ body{
     width: 100%;
 }
 
-.overlay-item{
+.card{
     display: grid;
     grid-template-rows: var(--image-size);
     gap: 0 3ch;
     width: 100%;
 }
 
-.overlay-item.overlay-left{
+.card.overlay-left{
     grid-template-columns: var(--image-size) minmax(0, 1fr);
 }
 
-.overlay-item.overlay-right{
+.card.overlay-right{
     grid-template-columns: minmax(0, 1fr) var(--image-size);
 }
 
