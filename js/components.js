@@ -60,4 +60,21 @@ export class Card {
         this.container.classList.remove(HIDDEN_CLASSNAME);
         return sleep(0);
     }
+    
+    /**
+     * aa
+     * @param {{line_1: string, line_2: string, line_3: string}} content
+     *  aaa
+     */
+    async update(content){
+        await this.hide();
+        const card = this.container;
+
+        card.querySelector(".row-1").innerHTML = content.line_1;
+        card.querySelector(".row-2").innerHTML = content.line_2;
+        card.querySelector(".row-3").innerHTML = content.line_3;
+
+        await this.show();
+    }
+
 }
