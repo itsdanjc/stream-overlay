@@ -1,3 +1,6 @@
+const charBlacklist = [ "&", "<", ">", "\"", "\'" ]
+const schemeWhitelist = ["https:", "http:"]
+
 /**
  * Format a timestamp into 1-12 am/pm format.
  * @param {Date} time
@@ -24,4 +27,28 @@ export function formatTime(time){
     ;
 
     return `${hour}${min}${suffix}`;
+}
+
+/**
+ * Escape a html string, stripping or replacing
+ * "dangerous" characters.
+ * @param {string} str
+ * @returns {string} Escaped string.
+ */
+export function escapeHTML(str){
+    const replace = char => {
+        switch (char){
+            case "&": return "&amp;"
+            case "<": return "&lt;"
+            case ">": return "&gt;"
+            case "\"": return "&quot;"
+            case "\'": return "&#39;"
+            default: return char
+        }
+    }
+
+    return str.replace(
+        new RegExp(`(${charBlacklist.join("|")})`, "g"),
+        char => replace(char)
+    )
 }

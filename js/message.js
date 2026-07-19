@@ -5,7 +5,7 @@
     Licensed under MIT.
 */
 
-import { formatTime } from "./format.js";
+import { formatTime, escapeHTML } from "./format.js";
 
 // Object representing currently playing song.
 export const TrackData = (t) => ({
@@ -19,8 +19,8 @@ export const TrackData = (t) => ({
 
 export const TrackCardBody = (t) => ({
     line_1:    "Now Playing",
-    line_2:    t.title    ?? "Unknown Song",
-    line_3:    t.artist   ?? "Unknown Artist",
+    line_2:    escapeHTML(t.title)  ?? "Unknown Song",
+    line_3:    escapeHTML(t.artist) ?? "Unknown Artist",
     thumbnail: t.imageUrl ?? "about:blank",
 });
 
@@ -37,9 +37,8 @@ export const ProgrammeData = (p) => ({
 
 export const ProgrammeCardBody = (p) => ({
     line_1: "Live Now",
-    line_2: p.name ?? "Unknown Programme",
-    line_3:
-        `${formatTime(p.start)} \u2013 ${formatTime(p.end)}`,
+    line_2: escapeHTML(p.name) ?? "Unknown Programme",
+    line_3: `${formatTime(p.start)} \u2013 ${formatTime(p.end)}`,
     thumbnail: p.imageUrl ?? "about:blank",
 });
 
