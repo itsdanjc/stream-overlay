@@ -51,27 +51,21 @@ function getAnimationDuration(element) {
     return duration;
 }
 
-/**
- * @param {{line_1: string, line_2: string, line_3: string}} obj_1 
- * @param {{line_1: string, line_2: string, line_3: string}} obj_2 
- * @returns {boolean}
- */
-function equalTo(obj_1, obj_2){
-    return(
-        obj_1 && obj_2 &&
-        obj_1.line_1 === obj_2.line_1 &&
-        obj_1.line_2 === obj_2.line_2 &&
-        obj_1.line_3 === obj_2.line_3
-    );
-}
-
-
+// Types
 /**
  * @typedef {Object} CardChildren
- * @property {Element} thumbnail
- * @property {Element} row_1
- * @property {Element} row_2
- * @property {Element} row_3
+ * @property {HTMLImageElement} thumbnail
+ * @property {HTMLDivElement} row_1
+ * @property {HTMLDivElement} row_2
+ * @property {HTMLDivElement} row_3
+ */
+
+/**
+ * @typedef {Object} CardBody
+ * @property {URL | string} thumbnail
+ * @property {string} row_1
+ * @property {string} row_2
+ * @property {string} row_3
  */
 
 
@@ -87,9 +81,6 @@ export class Card {
 
     /** @type {number} */
     animationDuration;
-
-    /** @type {Object} */
-    prevContent;
 
     constructor(selector){
         this.container = document.querySelector(selector);
@@ -108,6 +99,25 @@ export class Card {
      */
     isHidden(){
         return this.container.classList.contains(HIDDEN_CLASSNAME);
+    }
+
+    /**
+     * Compare this card's body with an given element.
+     * @param {CardBody} body Object to compare against.
+     * @returns {boolean} True if match, false otherwise.
+     */
+    isEqual(body){
+        if (body.thumbnail instanceof URL)
+            body.thumbnail = body.thumbnail.toJSON();
+
+        return (
+            body && 
+            this.children &&
+            body.row_1 === this.children.row_1.innerHTML &&
+            body.row_2 === this.children.row_2.innerHTML &&
+            body.row_3 === this.children.row_3.innerHTML &&
+            body.thumbnail === this.children.thumbnail.src
+        );
     }
 
     /**
@@ -138,20 +148,16 @@ export class Card {
     
     /**
      * aa
-     * @param {{line_1: string, line_2: string, line_3: string}} content
+     * @param {CardBody} content
      *  aaa
      */
     async update(content){
-        if (equalTo(content, this.prevContent)) return;
-
         await this.hide();
         const card = this.container;
 
         card.querySelector(".row-1").innerHTML = content.line_1;
         card.querySelector(".row-2").innerHTML = content.line_2;
         card.querySelector(".row-3").innerHTML = content.line_3;
-
-        this.prevContent = content;
 
         await this.show();
     }
