@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "itsdanjc",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  }
 }
