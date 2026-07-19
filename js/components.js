@@ -65,17 +65,41 @@ function equalTo(obj_1, obj_2){
     );
 }
 
+
+/**
+ * @typedef {Object} CardChildren
+ * @property {Element} thumbnail
+ * @property {Element} row_1
+ * @property {Element} row_2
+ * @property {Element} row_3
+ */
+
+
 /**
  * Represents a card component.
  */
 export class Card {
+    /** @type {Element} */
     container;
+
+    /** @type {CardChildren} */
+    children;
+
+    /** @type {number} */
     animationDuration;
+
+    /** @type {Object} */
     prevContent;
 
     constructor(selector){
         this.container = document.querySelector(selector);
         this.animationDuration = getAnimationDuration(this.container);
+        this.children = {
+            thumbnail: this.container.querySelector(".thumbnail-image"),
+            row_1: this.container.querySelector(".row-1"),
+            row_2: this.container.querySelector(".row-2"),
+            row_3: this.container.querySelector(".row-3"),
+        };
     }
 
     /**
