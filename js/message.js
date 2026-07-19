@@ -5,7 +5,7 @@
     Licensed under MIT.
 */
 
-import { formatTime, escapeHTML } from "./format.js";
+import { formatTime, escapeHTML, escapeURL } from "./format.js";
 
 // Object representing currently playing song.
 export const TrackData = (t) => ({
@@ -13,7 +13,7 @@ export const TrackData = (t) => ({
     trackId:    t.trackId,
     title:      t.title,
     artist:     t.artist,
-    imageUrl:   t.imageUrl,
+    imageUrl:   new URL(t.imageUrl),
     appleMusicUrl: t.appleMusicUrl
 });
 
@@ -21,14 +21,14 @@ export const TrackCardBody = (t) => ({
     line_1:    "Now Playing",
     line_2:    escapeHTML(t.title)  ?? "Unknown Song",
     line_3:    escapeHTML(t.artist) ?? "Unknown Artist",
-    thumbnail: t.imageUrl ?? "about:blank",
+    thumbnail: escapeURL(t.imageUrl) ?? "about:blank",
 });
 
 // Object representing current programme.
 export const ProgrammeData = (p) => ({
     name:           p.name,
     description:    p.description,
-    imageUrl:       p.imageUrl,
+    imageUrl:       new URL(p.imageUrl),
     programmeId:    p.programmeId,
     start:          new Date( p.start ),
     end:            new Date( p.end ),
@@ -39,7 +39,7 @@ export const ProgrammeCardBody = (p) => ({
     line_1: "Live Now",
     line_2: escapeHTML(p.name) ?? "Unknown Programme",
     line_3: `${formatTime(p.start)} \u2013 ${formatTime(p.end)}`,
-    thumbnail: p.imageUrl ?? "about:blank",
+    thumbnail: escapeURL(p.imageUrl) ?? "about:blank",
 });
 
 // Object representing a websocket response message.

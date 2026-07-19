@@ -52,3 +52,20 @@ export function escapeHTML(str){
         char => replace(char)
     )
 }
+
+/**
+ * Sanitize a URL. Blocks urls that have invalid schemes.
+ * @param {URL} url 
+ * @returns {URL} Same as `url` if valid, `about:blank` if invalid.
+ */
+export function escapeURL(url){
+    if(!(url instanceof URL)){
+        throw new Error("\`url\` not type \`URL\`.")
+    }
+
+    for(let s of schemeWhitelist){
+        if (url.protocol == s) return url;
+    }
+    
+    return new URL("about:blank#blocked")
+}
