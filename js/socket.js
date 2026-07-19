@@ -1,5 +1,5 @@
 import { Message } from "./message.js";
-import { Card } from "./components.js";
+import { Card } from "./card.js";
 import * as config from "./config.js";
 
 // Card components

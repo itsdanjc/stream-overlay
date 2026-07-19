@@ -1,5 +1,5 @@
 import { onConnect, onMessage } from "./socket.js";
-import { Card } from "./components.js";
+import { Card } from "./card.js";
 import * as config from "./config.js";
 
 var websocket;
