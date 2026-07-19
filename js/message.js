@@ -5,6 +5,7 @@
     Licensed under MIT.
 */
 
+import { formatTime } from "./format.js";
 
 // Object representing currently playing song.
 export const TrackData = (t) => ({
@@ -35,10 +36,11 @@ export const ProgrammeData = (p) => ({
 });
 
 export const ProgrammeCardBody = (p) => ({
-    line_1:    "Live Now",
-    line_2:    p.name        ?? "Unknown Programme",
-    line_3:    p.description ?? "Info Not Available",
-    thumbnail: p.imageUrl    ?? "about:blank",
+    line_1: "Live Now",
+    line_2: p.name ?? "Unknown Programme",
+    line_3:
+        `${formatTime(p.start)} \u2013 ${formatTime(p.end)}`,
+    thumbnail: p.imageUrl ?? "about:blank",
 });
 
 // Object representing a websocket response message.
