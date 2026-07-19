@@ -51,19 +51,20 @@ export async function onMessage(event){
     const msgJson = JSON.parse(event.data);
     const msg = Message(msgJson);
 
-    console.log(msg)
-
     const track = msg.track ? {
         line_1: "Now Playing",
         line_2: msg.track.title ?? "Unknown Song",
-        line_3: msg.track.artist ?? "Unknown Artist"
+        line_3: msg.track.artist ?? "Unknown Artist",
+        thumbnail: msg.track.imageUrl
     } : config.placeholders.track
 
     const programme = msg.programme ? {
         line_1: "Live Now",
         line_2: msg.programme.name ?? "Unknown Programme",
-        line_3: msg.programme.artist ?? "24/7 Hits"
+        line_3: msg.programme.artist ?? "24/7 Hits",
+        thumbnail: msg.programme.imageUrl
     } : config.placeholders.programme;
+
 
     if(!trackOverlay.isEqual(track))
         trackOverlay.update(track);

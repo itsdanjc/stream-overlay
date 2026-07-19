@@ -6,6 +6,7 @@
 */
 
 const HIDDEN_CLASSNAME = "hidden";
+const NO_URL_DEFAULT = "about:blank"
 
 /**
  * Utility function that, when awaited, pauses execution
@@ -63,9 +64,9 @@ function getAnimationDuration(element) {
 /**
  * @typedef {Object} CardBody
  * @property {URL | string} thumbnail
- * @property {string} row_1
- * @property {string} row_2
- * @property {string} row_3
+ * @property {string} line_1
+ * @property {string} line_2
+ * @property {string} line_3
  */
 
 
@@ -111,12 +112,10 @@ export class Card {
             body.thumbnail = body.thumbnail.toJSON();
 
         return (
-            body && 
-            this.children &&
-            body.row_1 === this.children.row_1.innerHTML &&
-            body.row_2 === this.children.row_2.innerHTML &&
-            body.row_3 === this.children.row_3.innerHTML &&
-            body.thumbnail === this.children.thumbnail.src
+            body.line_1 == this.children.row_1.innerHTML &&
+            body.line_2 == this.children.row_2.innerHTML &&
+            body.line_3 == this.children.row_3.innerHTML &&
+            body.thumbnail == this.children.thumbnail.src
         );
     }
 
@@ -147,19 +146,38 @@ export class Card {
     }
     
     /**
-     * aa
+     * Updates the card content with new content.
      * @param {CardBody} content
-     *  aaa
+     * @returns {Promise<null>}
      */
-    async update(content){
-        await this.hide();
-        const card = this.container;
+    update(content){
+        // Create image object to preload source.
+        const imgPreload = new Image(120, 120);
+        imgPreload.classList = this.children.thumbnail.classList;
+        imgPreload.src = content.thumbnail ?? NO_URL_DEFAULT;
 
-        card.querySelector(".row-1").innerHTML = content.line_1;
-        card.querySelector(".row-2").innerHTML = content.line_2;
-        card.querySelector(".row-3").innerHTML = content.line_3;
+        const onEvent = async (event) => {
+            await this.hide();
 
-        await this.show();
+            if(event.type == "load"){
+                this.container.classList.remove("accent-line");
+            } else {
+                this.container.classList.add("accent-line");
+            }
+            
+            this.children.thumbnail.replaceWith(imgPreload);
+            this.children.thumbnail = imgPreload;
+            this.children.row_1.innerHTML = content.line_1;
+            this.children.row_2.innerHTML = content.line_2;
+            this.children.row_3.innerHTML = content.line_3;
+            
+            await this.show();
+        }
+
+        return new Promise((resolve, reject) => {
+            imgPreload.onload = event  => resolve( onEvent(event) );
+            imgPreload.onerror = event => resolve( onEvent(event) );
+        });
     }
 
 }
