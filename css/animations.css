@@ -21,12 +21,12 @@
     opacity: 0;
 }
 
-.card.hidden.overlay-left .row{
-    transform: translate(-75%);
+.card.hidden.overlay-left .row:not(.row-1){
+    transform: translate(-250px);
 }
 
-.card.hidden.overlay-right .row{
-    transform: translate(75%);
+.card.hidden.overlay-right .row:not(.row-1){
+    transform: translate(250px);
 }
 
 .accent-container > div{

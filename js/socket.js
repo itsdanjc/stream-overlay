@@ -1,4 +1,4 @@
-import { Message } from "./message.js";
+import { Message, TrackCardBody, ProgrammeCardBody } from "./message.js";
 import { Card } from "./card.js";
 import * as config from "./config.js";
 
@@ -51,24 +51,27 @@ export async function onMessage(event){
     const msgJson = JSON.parse(event.data);
     const msg = Message(msgJson);
 
-    const track = msg.track ? {
-        line_1: "Now Playing",
-        line_2: msg.track.title ?? "Unknown Song",
-        line_3: msg.track.artist ?? "Unknown Artist",
-        thumbnail: msg.track.imageUrl
-    } : config.placeholders.track
+    const trackBody = msg.track 
+        ? TrackCardBody(msg.track) 
+        : config.placeholders.track
+    ;
+    const programmeBody = msg.programme
+        ? ProgrammeCardBody(msg.programme)
+        : config.placeholders.programme
+    ;
 
-    const programme = msg.programme ? {
-        line_1: "Live Now",
-        line_2: msg.programme.name ?? "Unknown Programme",
-        line_3: msg.programme.artist ?? "24/7 Hits",
-        thumbnail: msg.programme.imageUrl
-    } : config.placeholders.programme;
+    // Wrapper around Card.update
+    async function updateCard(card, body){
+        if (!body){
+            await card.hide();
+            return;
+        }
 
+        if (!card.isEqual(body)){
+            await card.update(body);
+        }
+    }
 
-    if(!trackOverlay.isEqual(track))
-        trackOverlay.update(track);
-
-    if(!programmeOverlay.isEqual(programme))
-        programmeOverlay.update(programme);
+    updateCard(trackOverlay, trackBody);
+    updateCard(programmeOverlay, programmeBody);
 }
