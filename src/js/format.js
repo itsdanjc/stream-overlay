@@ -55,12 +55,19 @@ export function escapeHTML(str){
 
 /**
  * Sanitize a URL. Blocks urls that have invalid schemes.
- * @param {URL} url 
+ * @param {URL | string | null} url URL to sanitize.
+ *  If a string, or null is given, will attempt to covert to URL type.
  * @returns {URL} Same as `url` if valid, `about:blank` if invalid.
  */
 export function escapeURL(url){
+    if(!url){
+        // If null, just return new URL.
+        return new URL("")
+    }
+
     if(!(url instanceof URL)){
-        throw new Error("\`url\` not type \`URL\`.")
+        // Convert to URL type if string.
+        url = new URL(url)
     }
 
     for(let s of schemeWhitelist){

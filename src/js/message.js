@@ -11,35 +11,35 @@ import { formatTime, escapeHTML, escapeURL } from "./format.js";
 export const TrackData = (t) => ({
     eventId:    t.eventId,
     trackId:    t.trackId,
-    title:      t.title,
-    artist:     t.artist,
-    imageUrl:   new URL(t.imageUrl),
-    appleMusicUrl: t.appleMusicUrl
+    title:      escapeHTML(t.title),
+    artist:     escapeHTML(t.artist),
+    imageUrl:   escapeURL(t.imageUrl),
+    appleMusicUrl: escapeURL(t.appleMusicUrl)
 });
 
 export const TrackCardBody = (t) => ({
     line_1:    "Now Playing",
-    line_2:    escapeHTML(t.title)  ?? "Unknown Song",
-    line_3:    escapeHTML(t.artist) ?? "Unknown Artist",
-    thumbnail: escapeURL(t.imageUrl) ?? "about:blank",
+    line_2:    t.title  ?? "Unknown Song",
+    line_3:    t.artist ?? "Unknown Artist",
+    thumbnail: t.imageUrl ?? "about:blank",
 });
 
 // Object representing current programme.
 export const ProgrammeData = (p) => ({
-    name:           p.name,
-    description:    p.description,
-    imageUrl:       new URL(p.imageUrl),
+    name:           escapeHTML(p.name),
+    description:    escapeHTML(p.description),
+    imageUrl:       escapeURL(p.imageUrl),
     programmeId:    p.programmeId,
     start:          new Date( p.start ),
     end:            new Date( p.end ),
-    contactPageUrl: p.contactPageUrl
+    contactPageUrl: escapeURL(p.contactPageUrl)
 });
 
 export const ProgrammeCardBody = (p) => ({
     line_1: "Live Now",
-    line_2: escapeHTML(p.name) ?? "Unknown Programme",
+    line_2: p.name ?? "Unknown Programme",
     line_3: `${formatTime(p.start)} &ndash; ${formatTime(p.end)}`,
-    thumbnail: escapeURL(p.imageUrl) ?? "about:blank",
+    thumbnail: p.imageUrl ?? "about:blank",
 });
 
 // Object representing a websocket response message.
