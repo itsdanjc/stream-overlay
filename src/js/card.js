@@ -6,7 +6,6 @@
 */
 
 const HIDDEN_CLASSNAME = "hidden";
-const NO_URL_DEFAULT = "about:blank"
 
 /**
  * Utility function that, when awaited, pauses execution
@@ -63,7 +62,7 @@ function getAnimationDuration(element) {
 
 /**
  * @typedef {Object} CardBody
- * @property {URL | string} thumbnail
+ * @property {URL | Blob} thumbnail
  * @property {string} line_1
  * @property {string} line_2
  * @property {string} line_3
@@ -158,7 +157,17 @@ export class Card {
         // Create image object to preload source.
         const imgPreload = new Image(120, 120);
         imgPreload.classList = this.children.thumbnail.classList;
-        imgPreload.src = content.thumbnail ?? NO_URL_DEFAULT;
+
+        // Check whether content.thumbnail is URL or Blob.
+        const thumbIsBlob = content.thumbnail instanceof Blob;
+        if(thumbIsBlob){
+            imgPreload.src = URL.createObjectURL(
+                content.thumbnail
+            )
+        } else {
+            imgPreload.src = content.thumbnail.href ?? "";
+        }
+
 
         /** @param {Event} event */
         const onEvent = async (event) => {
@@ -176,6 +185,9 @@ export class Card {
             this.children.row_2.innerHTML = content.line_2;
             this.children.row_3.innerHTML = content.line_3;
             this.cardBody = content;
+
+            // If the thumbnail image was a Blob, remove from memory
+            if (thumbIsBlob) URL.revokeObjectURL(content.thumbnail);
 
             await this.show();
             return event;
