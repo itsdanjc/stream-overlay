@@ -38,7 +38,7 @@ export const ProgrammeData = (p) => ({
 export const ProgrammeCardBody = (p) => ({
     line_1: "Live Now",
     line_2: escapeHTML(p.name) ?? "Unknown Programme",
-    line_3: `${formatTime(p.start)} \u2013 ${formatTime(p.end)}`,
+    line_3: `${formatTime(p.start)} &ndash; ${formatTime(p.end)}`,
     thumbnail: escapeURL(p.imageUrl) ?? "about:blank",
 });
 

@@ -83,14 +83,17 @@ export class Card {
     /** @type {number} */
     animationDuration;
 
+    /** @type {CardBody} */
+    cardBody;
+
     constructor(selector){
         this.container = document.querySelector(selector);
         this.animationDuration = getAnimationDuration(this.container);
         this.children = {
             thumbnail: this.container.querySelector(".thumbnail-image"),
-            row_1: this.container.querySelector(".row-1"),
-            row_2: this.container.querySelector(".row-2"),
-            row_3: this.container.querySelector(".row-3"),
+            row_1:     this.container.querySelector(".row-1"),
+            row_2:     this.container.querySelector(".row-2"),
+            row_3:     this.container.querySelector(".row-3"),
         };
     }
 
@@ -108,14 +111,15 @@ export class Card {
      * @returns {boolean} True if match, false otherwise.
      */
     isEqual(body){
-        if (body.thumbnail instanceof URL)
-            body.thumbnail = body.thumbnail.toJSON();
-
+        // console.table(body)
+        // console.table(this.cardBody)
+        // console.log(body.thumbnail == this.cardBody.thumbnail)
         return (
-            body.line_1 == this.children.row_1.innerHTML &&
-            body.line_2 == this.children.row_2.innerHTML &&
-            body.line_3 == this.children.row_3.innerHTML &&
-            body.thumbnail == this.children.thumbnail.src
+            this.cardBody &&
+            body.line_1 == this.cardBody.line_1 &&
+            body.line_2 == this.cardBody.line_2 &&
+            body.line_3 == this.cardBody.line_3 &&
+            body.thumbnail.href == this.cardBody.thumbnail.href
         );
     }
 
@@ -148,7 +152,7 @@ export class Card {
     /**
      * Updates the card content with new content.
      * @param {CardBody} content
-     * @returns {Promise<null>}
+     * @returns {Promise<Event>}
      */
     update(content){
         // Create image object to preload source.
@@ -156,6 +160,7 @@ export class Card {
         imgPreload.classList = this.children.thumbnail.classList;
         imgPreload.src = content.thumbnail ?? NO_URL_DEFAULT;
 
+        /** @param {Event} event */
         const onEvent = async (event) => {
             await this.hide();
 
@@ -170,8 +175,10 @@ export class Card {
             this.children.row_1.innerHTML = content.line_1;
             this.children.row_2.innerHTML = content.line_2;
             this.children.row_3.innerHTML = content.line_3;
-            
+            this.cardBody = content;
+
             await this.show();
+            return event;
         }
 
         return new Promise((resolve, reject) => {
@@ -179,5 +186,4 @@ export class Card {
             imgPreload.onerror = event => resolve( onEvent(event) );
         });
     }
-
 }
