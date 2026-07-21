@@ -57,12 +57,11 @@ export function escapeHTML(str){
  * Sanitize a URL. Blocks urls that have invalid schemes.
  * @param {URL | string | null} url URL to sanitize.
  *  If a string, or null is given, will attempt to covert to URL type.
- * @returns {URL} Same as `url` if valid, `about:blank` if invalid.
+ * @returns {URL | null} Same as `url` if valid, `about:blank` if invalid.
  */
 export function escapeURL(url){
     if(!url){
-        // If null, just return new URL.
-        return new URL("")
+        return null;
     }
 
     if(!(url instanceof URL)){

@@ -165,7 +165,9 @@ export class Card {
                 content.thumbnail
             )
         } else {
-            imgPreload.src = content.thumbnail.href ?? "";
+            imgPreload.src = content.thumbnail
+                ? content.thumbnail.href
+                : "";
         }
 
 

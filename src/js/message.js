@@ -21,7 +21,7 @@ export const TrackCardBody = (t) => ({
     line_1:    "Now Playing",
     line_2:    t.title  ?? "Unknown Song",
     line_3:    t.artist ?? "Unknown Artist",
-    thumbnail: t.imageUrl ?? "about:blank",
+    thumbnail: t.imageUrl,
 });
 
 // Object representing current programme.
@@ -39,7 +39,7 @@ export const ProgrammeCardBody = (p) => ({
     line_1: "Live Now",
     line_2: p.name ?? "Unknown Programme",
     line_3: `${formatTime(p.start)} &ndash; ${formatTime(p.end)}`,
-    thumbnail: p.imageUrl ?? "about:blank",
+    thumbnail: p.imageUrl,
 });
 
 // Object representing a websocket response message.
