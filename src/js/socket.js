@@ -1,3 +1,4 @@
+import { qrcode } from "etiket";
 import { Message, TrackCardBody, ProgrammeCardBody } from "./message.js";
 import { Card } from "./card.js";
 import * as config from "./config.js";
@@ -20,6 +21,24 @@ var heartbeatFunc;
 function sendMessage(ws, obj){
     const msgStr = JSON.stringify(obj)
     ws.send(msgStr)
+}
+
+/**
+ * 
+ * @param {URL | string} url 
+ * @returns {Blob}
+ */
+function createQRBlob(url){
+    if (url instanceof URL)
+        url = url.toJSON();
+
+    const qrBinArr = qrcode(url, {
+        size: 120,
+    });
+
+    return new Blob([...qrBinArr], {
+        type: "image/svg+xml"
+    });
 }
 
 /**
@@ -50,6 +69,16 @@ export function onConnect(event){
 export async function onMessage(event){
     const msgJson = JSON.parse(event.data);
     const msg = Message(msgJson);
+
+    if(config.useQR && msg.track){
+        if(msg.track.appleMusicUrl){
+            msg.track.imageUrl = createQRBlob(
+                msg.track.appleMusicUrl
+            );
+        } else {
+            msg.track.imageUrl = msg.programme.imageUrl;
+        }
+    }
 
     const trackBody = msg.track 
         ? TrackCardBody(msg.track) 
