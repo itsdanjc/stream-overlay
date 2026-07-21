@@ -5,7 +5,7 @@ import htmlPlugin from "@chialab/esbuild-plugin-html";
 import { BANNER } from './banner.js';
 
 const OUT_DIR = "./dist";
-const TO_BUILD = ["**.html"];
+const TO_BUILD = ["src/*.html"];
 
 // Define and make output directory
 await mkdir(OUT_DIR, { recursive: true });
