@@ -1,25 +1,25 @@
-import { onConnect, onMessage } from "./socket.js";
+import { onConnect, onMessage, onClose } from "./socket.js";
 import { Card } from "./card.js";
 import * as config from "./config.js";
 
+/** @type {WebSocket} */
 var websocket;
 
-function initWebsocket(event){
-    if(event instanceof CloseEvent){
-        // Event: Websocket reconnect.
-        console.log("Reconnecting to Websocket...")
-    }
-
-    else {
-        // Event: Window load.
-        console.log("Connecting to Aiir metadata")
-    }
-
-    websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
-    
+function bindEvents(socket){
     websocket.onopen = onConnect;
     websocket.onmessage = onMessage;
-    websocket.onclose = initWebsocket;
+    
+    websocket.onclose = event => {
+        onClose(event, socket => {
+            websocket = socket;
+            bindEvents(websocket);
+        })
+    };
+
+    window.onoffline = () => websocket.close();
 }
 
-window.onload = initWebsocket;
+window.onload = () => {
+    websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
+    bindEvents(websocket);
+}
