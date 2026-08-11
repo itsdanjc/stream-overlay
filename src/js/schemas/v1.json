@@ -1,0 +1,85 @@
+{
+    "version": 1,
+    "fields": {
+        "id": {
+            "id": "stationId",
+            "type": "string",
+            "default": null,
+            "description": "The Station ID you use to send metadata to Aiir CMS."
+        },
+        "qr": {
+            "id": "useQR",
+            "type": "boolean",
+            "default": false,
+            "description": "Use QR codes with a link to Apple Music, instead of showing cover art."
+        },
+        "pc": {
+            "id": "colour.primary",
+            "type": "string",
+            "description": "Primary colour to use throughout."
+        },
+        "sc": {
+            "id": "colour.secondary",
+            "type": "string",
+            "description": "Secondary colour to use throughout."
+        },
+        "fc": {
+            "id": "colour.font",
+            "type": "string",
+            "default": "ffffff",
+            "description": "Colour to use for text."
+        },
+        "tt": {
+            "id": "track.title",
+            "type": "string",
+            "default": "Now Playing",
+            "description": "Text to use on line 1 (title line) of the track info card."
+        },
+        "pt": {
+            "id": "programme.title",
+            "type": "string",
+            "default": "Live Now",
+            "description": "Text to use on line 1 (title line) of the programme info card."
+        },
+        "tl1": {
+            "id": "placeholders.track.line_1",
+            "type": "string",
+            "description": "Title of the track placeholder."
+        },
+        "tl2": {
+            "id": "placeholders.track.line_2",
+            "type": "string",
+            "description": "Content of the track placeholder."
+        },
+        "tl3": {
+            "id": "placeholders.track.line_3",
+            "type": "string",
+            "description": "Footer of the track placeholder."
+        },
+        "tth": {
+            "id": "placeholders.track.thumbnail",
+            "type": "url",
+            "description": "Thumbnail of the track placeholder."
+        },
+        "pl1": {
+            "id": "placeholders.programme.line_1",
+            "type": "string",
+            "description": "Title of the programme placeholder."
+        },
+        "pl2": {
+            "id": "placeholders.programme.line_2",
+            "type": "string",
+            "description": "Content of the programme placeholder."
+        },
+        "pl3": {
+            "id": "placeholders.programme.line_3",
+            "type": "string",
+            "description": "Footer of the programme placeholder."
+        },
+        "pth": {
+            "id": "placeholders.programme.thumbnail",
+            "type": "url",
+            "description": "Thumbnail of the programme placeholder."
+        }
+    }
+}
