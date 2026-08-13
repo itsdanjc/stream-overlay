@@ -2,7 +2,9 @@ import { qrcode } from "etiket";
 import { Message, TrackCardBody, ProgrammeCardBody } from "./message.js";
 import { Card } from "./card.js";
 import { formatTime } from "./format.js";
-import * as config from "./config.js";
+import { Config } from "./config.js";
+
+var cfg;
 
 // Card components
 var programmeOverlay;
@@ -62,11 +64,14 @@ function createQRBlob(url){
 
 /**
  * Handler for websocket connection event.
- * @param {Event} event 
+ * @param {Event} event
+ * @param {Config} config
  */
-export function onConnect(event){
+export function onConnect(event, config){
     console.log("Connected to Aiir.")
     const ws = event.target;
+
+    cfg = config;
 
     // Define overlays, only if it is undefined.
     if (!programmeOverlay) programmeOverlay = new Card("#programme");
@@ -78,7 +83,7 @@ export function onConnect(event){
 
     sendMessage(ws, {
         action: "subscribe",
-        serviceId: config.stationId
+        serviceId: cfg.stationId
     });
 
     heartbeatFunc = setInterval(
@@ -95,7 +100,7 @@ export async function onMessage(event){
     const msgJson = JSON.parse(event.data);
     const msg = Message(msgJson);
 
-    if(config.useQR && msg.track){
+    if(cfg.useQR && msg.track){
         if(msg.track.appleMusicUrl){
             msg.track.imageUrl = createQRBlob(
                 msg.track.appleMusicUrl
@@ -106,17 +111,23 @@ export async function onMessage(event){
     }
 
     const trackBody = msg.track 
-        ? TrackCardBody(msg.track) 
-        : config.placeholders.track
+        ? TrackCardBody(cfg.track.title, msg.track) 
+        : cfg.placeholders.track
     ;
     const programmeBody = msg.programme
-        ? ProgrammeCardBody(msg.programme)
-        : config.placeholders.programme
+        ? ProgrammeCardBody(cfg.programme.title, msg.programme)
+        : cfg.placeholders.programme
     ;
 
     // Wrapper around Card.update
     async function updateCard(card, body){
-        if (!body){
+        var hasBody = (
+            body.line_1 || 
+            body.line_2 || 
+            body.line_3
+        );
+
+        if (!hasBody){
             await card.hide();
             return;
         }
@@ -196,14 +207,14 @@ export async function onClose(event, callback){
     socketReconnectFailureFunc = setTimeout(() => {
         console.log("Disconnected for longer that 2.5 minutes. Showing fallback.");
 
-        if (config.placeholders.track){
-            trackOverlay.update(config.placeholders.track);
+        if (cfg.placeholders.track){
+            trackOverlay.update(cfg.placeholders.track);
         } else {
             trackOverlay.hide();
         }
 
-        if (config.placeholders.programme){
-            programmeOverlay.update(config.placeholders.programme);
+        if (cfg.placeholders.programme){
+            programmeOverlay.update(cfg.placeholders.programme);
         } else {
             programmeOverlay.hide();
         }

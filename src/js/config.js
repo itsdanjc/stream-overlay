@@ -76,7 +76,7 @@ export class Config {
                 console.error(`Schema seems to be invalid: Invalid value type ${field.type}.`);
                 continue;
             }   
-            map[key] = withDefault(type, field.default)
+            map[key] = withDefault(type, field.default ?? null)
         }
 
         return map
@@ -102,25 +102,5 @@ export class Config {
         }
 
         ref[parts.at(-1)] = value;
-    }
-}
-
-
-
-
-
-export const stationId = "5188";
-export const useQR = true;
-
-export const placeholders = {
-    track: {
-        line_1: "Placeholder Title",
-        line_2: "Placeholder Content",
-        line_3: "Placeholder Footer",
-    },
-    programme: {
-        line_1: "On Air",
-        line_2: "24/7 Hits",
-        line_3: "example.com/radio",
     }
 }

@@ -17,8 +17,8 @@ export const TrackData = (t) => ({
     appleMusicUrl: escapeURL(t.appleMusicUrl)
 });
 
-export const TrackCardBody = (t) => ({
-    line_1:    "Now Playing",
+export const TrackCardBody = (l1, t) => ({
+    line_1:    l1,
     line_2:    t.title  ?? "Unknown Song",
     line_3:    t.artist ?? "Unknown Artist",
     thumbnail: t.imageUrl,
@@ -35,8 +35,8 @@ export const ProgrammeData = (p) => ({
     contactPageUrl: escapeURL(p.contactPageUrl)
 });
 
-export const ProgrammeCardBody = (p) => ({
-    line_1: "Live Now",
+export const ProgrammeCardBody = (l1, p) => ({
+    line_1: l1,
     line_2: p.name ?? "Unknown Programme",
     line_3: `${formatTime(p.start)} &ndash; ${formatTime(p.end)}`,
     thumbnail: p.imageUrl,

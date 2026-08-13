@@ -5,9 +5,13 @@ import { Config } from "./config.js";
 /** @type {WebSocket} */
 var websocket;
 
+/** @type {Config} */
+var config;
+
 function bindEvents(socket){
-    websocket.onopen = onConnect;
-    websocket.onmessage = onMessage;
+    websocket.onopen = e => onConnect(e, config);
+
+    websocket.onmessage = e => onMessage(e);
     
     websocket.onclose = event => {
         onClose(event, socket => {
@@ -20,7 +24,8 @@ function bindEvents(socket){
 }
 
 window.onload = () => {
-    new Config(window.location.search);
+    config = new Config(window.location.search);
+
     websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
     bindEvents(websocket);
 }
