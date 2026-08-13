@@ -20,6 +20,7 @@ function bindEvents(socket){
 }
 
 window.onload = () => {
+    new config.Configuration(window.location.search);
     websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
     bindEvents(websocket);
 }
