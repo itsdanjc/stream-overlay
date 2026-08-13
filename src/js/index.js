@@ -1,6 +1,6 @@
 import { onConnect, onMessage, onClose } from "./socket.js";
 import { Card } from "./card.js";
-import * as config from "./config.js";
+import { Config } from "./config.js";
 
 /** @type {WebSocket} */
 var websocket;
@@ -20,7 +20,7 @@ function bindEvents(socket){
 }
 
 window.onload = () => {
-    new config.Configuration(window.location.search);
+    new Config(window.location.search);
     websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
     bindEvents(websocket);
 }

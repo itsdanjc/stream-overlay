@@ -41,58 +41,69 @@ const ValueType = {
     color: ColorParam,
 }
 
-/**
- * 
- * @returns 
- */
-function makeParamConfigMap(){
-    const fields = schema.fields;
-    let schemaConfigMap = {};
 
-    for (const key in fields){
-        var type;
-
-        if (key in ValueType){
-            type = ValueType[ fields[key].type ];
-        } else {
-            type = StringParam;
-        }
-
-        schemaConfigMap[key] = withDefault(
-            type, fields[key].default
-        )
-    }
-
-    return schemaConfigMap
-}
-
-/**
- * 
- */
-export class Configuration {
-    constructor(paramsString){
+export class Config {
+    /**
+     * Object defined values for configuration.
+     * @param {string} from URL param (like) list to extract configuration from.
+     */
+    constructor(from){
         const query = decodeQueryParams(
-            makeParamConfigMap(),
-            searchStringToObject(paramsString)
+            Config.makeParamConfigMap(),
+            searchStringToObject(from)
         )
+        
+        const fields = schema.fields;
+        for (const param in fields){
+            this.add(
+                fields[param].id,   // Key
+                query[param]        // Value
+            )
+        }        
+    }
 
-        for (const key in query){
-            this[key] = query[key];
+    /**
+     * 
+     * @returns 
+     */
+    static makeParamConfigMap(){
+        const fields = Object.entries(schema.fields);
+        let map = {};
+    
+        for (const [key, field] of fields){
+            const type = ValueType[field.type];
+            if(!type) {
+                console.error(`Schema seems to be invalid: Invalid value type ${field.type}.`);
+                continue;
+            }   
+            map[key] = withDefault(type, field.default)
         }
 
-        console.log(this)
+        return map
+    }
+
+    /**
+     * 
+     * @param {string} key 
+     * @param {any} value 
+     */
+    add(key, value){
+        if (!key.includes(".")){
+            this[key] = value;
+            return;
+        }
+
+        // Split keys into a tree structure using . as a separator.
+        const parts = key.split(".");
+        let ref = this;
+        for (let i = 0; i < parts.length - 1; i++) {
+            // Set the ref to the referring object, sets its value to an empty object if undefined.
+            ref = ref[parts[i]] ??= {};
+        }
+
+        ref[parts.at(-1)] = value;
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
