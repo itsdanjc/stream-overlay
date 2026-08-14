@@ -1,6 +1,6 @@
 {
   "name": "stream-overlay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An OBS browser source, to display Now Playing and Current Programme information.",
   "files": [
     "dist"
