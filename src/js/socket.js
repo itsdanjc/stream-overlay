@@ -45,7 +45,7 @@ function sendMessage(ws, obj){
 }
 
 /**
- * 
+ * Create a QR code as svg and return as Blob.
  * @param {URL | string} url 
  * @returns {Blob}
  */
@@ -53,11 +53,14 @@ function createQRBlob(url){
     if (url instanceof URL)
         url = url.toJSON();
 
-    const qrBinArr = qrcode(url, {
+    const qr = qrcode(url, {
         size: 120,
+        margin: 3,
+        background: cfg.colour.background,
+        color: cfg.colour.foreground,
     });
 
-    return new Blob([...qrBinArr], {
+    return new Blob([...qr], {
         type: "image/svg+xml"
     });
 }

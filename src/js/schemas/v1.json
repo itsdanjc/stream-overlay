@@ -49,6 +49,18 @@
             "default": "#1ab61a",
             "description": "Secondary colour to use throughout."
         },
+        "bgc": {
+            "id": "colour.background",
+            "type": "color",
+            "default": "#ffffff",
+            "description": "Background colour to use for QR codes, only useful when qr codes are enabled."
+        },
+        "fgc": {
+            "id": "colour.foreground",
+            "type": "color",
+            "default": "#000000",
+            "description": "Foreground colour to use for QR codes, only useful when qr codes are enabled."
+        },
         "fc": {
             "id": "colour.font",
             "type": "color",

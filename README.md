@@ -63,23 +63,25 @@ http://127.0.0.1:8000/?id=1234&pc=1f468f&sc=1f468f&=ffffff
 ```
 
 
-| Key   | Required | Description                                                               | Expected Values                | Default       |
-|:-----:|:--------:|:--------------------------------------------------------------------------|:-------------------------------|:--------------|
-| `id`  | Yes      | The Station ID you use to send metadata to Aiir CMS.                      | 4 digit alphanumeric string.   |               |
-| `qr`  |          | Use QR codes with a link to Apple Music, instead of showing cover art.    | 1 to enable, 0 to disable.     |               |
-| `pc`  | Yes      | Primary colour to use throughout.                                         | Hex Color Value.               |               |
-| `sc`  | Yes      | Secondary colour to use throughout.                                       | Hex Color Value.               |               |
-| `fc`  | Yes      | Colour to use for text.                                                   | Hex Color Value.               | `FFFFFF`      |
-| `tt`  |          | Text to use on line 1 (title line) of the track info card.                |                                | "Now Playing" |
-| `pt`  |          | Text to use on line 1 (title line) of the programme info card.            |                                | "Live Now"    |
-| `tl1` |          | Title of the track placeholder.                                           |                                |               |
-| `tl2` |          | Content of the track placeholder.                                         |                                |               |
-| `tl3` |          | Footer of the track placeholder.                                          |                                |               |
-| `tth` |          | Thumbnail of the track placeholder.                                       |                                |               |
-| `pl1` |          | Title of the programme placeholder.                                       |                                |               |
-| `pl2` |          | Content of the programme placeholder.                                     |                                |               |
-| `pl3` |          | Footer of the programme placeholder.                                      |                                |               |
-| `pth` |          | Thumbnail of the programme placeholder.                                   |
+| Key   | Required | Description                                                                   | Expected Values                | Default       |
+|:-----:|:--------:|:------------------------------------------------------------------------------|:-------------------------------|:--------------|
+| `id`  | Yes      | The Station ID you use to send metadata to Aiir CMS.                          | 4 digit alphanumeric string.   |               |
+| `qr`  |          | Use QR codes with a link to Apple Music, instead of showing cover art.        | 1 to enable, 0 to disable.     |               |
+| `pc`  | Yes      | Primary colour to use throughout.                                             | Hex Color Value.               |               |
+| `sc`  | Yes      | Secondary colour to use throughout.                                           | Hex Color Value.               |               |
+| `bgc` |          | Background colour to use for QR codes, only useful when QR codes are enabled. | Hex Color Value.               | `FFFFFF`      |
+| `fgc` |          | Foreground colour to use for QR codes, only useful when QR codes are enabled. | Hex Color Value.               | `000000`      |
+| `fc`  | Yes      | Colour to use for text.                                                       | Hex Color Value.               | `FFFFFF`      |
+| `tt`  |          | Text to use on line 1 (title line) of the track info card.                    |                                | "Now Playing" |
+| `pt`  |          | Text to use on line 1 (title line) of the programme info card.                |                                | "Live Now"    |
+| `tl1` |          | Title of the track placeholder.                                               |                                |               |
+| `tl2` |          | Content of the track placeholder.                                             |                                |               |
+| `tl3` |          | Footer of the track placeholder.                                              |                                |               |
+| `tth` |          | Thumbnail of the track placeholder.                                           |                                |               |
+| `pl1` |          | Title of the programme placeholder.                                           |                                |               |
+| `pl2` |          | Content of the programme placeholder.                                         |                                |               |
+| `pl3` |          | Footer of the programme placeholder.                                          |                                |               |
+| `pth` |          | Thumbnail of the programme placeholder.                                       |
 
 
 ## License and Disclaimers
