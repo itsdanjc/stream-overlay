@@ -10,18 +10,45 @@ camera livestream, as we wanted to give our viewers a similar experience our lis
 **In order to use Stream Overlay, you must be use using Aiir CMS.**
 
 **This project is packaged using the [NPM](https://npmjs.com) package manager**,
-if you don't have this, install this first.
+if you don't have this, install this first. You will also need a web server, for example, [Python](https://python.org).
 
+The following will install stream-overlay using a prebuilt package:
 ```bash
-# Installation
-mkdir streamoverlay & cd streamoverlay
+cd /path/to/installation/directory
+npm init
 npm install stream-overlay
-
-# Build and serve with NPM
-npm run build --serve
 ```
 
-You should now have successfully built the project!
+The package will now be installed. In order to use in OBS, a web server is necessary.
+In this example, we will use Python's `http.server` library:
+
+```bash
+python -m http.server -d node_modules/stream-overlay/dist/
+```
+
+
+For a more custom installation, you may wish to install and build manually:
+
+1.  Using [Git](https://git-scm.com/), clone this repository locally.
+
+    ```bash
+    git clone https://github.com/itsdanjc/stream-overlay.git /path/to/installation/directory
+    ```
+2.  Then, using NPM, build the project.
+
+    ```bash
+    cd /path/to/installation/directory
+    npm ci
+    npm run build
+    ```
+    This will create a package in a new `dist/` directory, this is were we'll serve from.
+
+3.  Serve using a web server, for example with Python.
+
+    ```
+    python -m http.server -d dist/ 
+    ```
+
 
 ### Configuation
 

@@ -115,7 +115,15 @@ export class Card {
             body.line_1 == this.cardBody.line_1 &&
             body.line_2 == this.cardBody.line_2 &&
             body.line_3 == this.cardBody.line_3 &&
-            (body.thumbnail.toString() ?? null) == (this.cardBody.thumbnail.toString() ?? null)
+            (
+                body.thumbnail 
+                ? body.thumbnail.href 
+                : null
+            ) == (
+                this.cardBody.thumbnail 
+                ? this.cardBody.thumbnail.href 
+                : null
+            )
         );
     }
 
