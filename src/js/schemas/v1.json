@@ -40,17 +40,19 @@
         "pc": {
             "id": "colour.primary",
             "type": "color",
+            "default": "#1f468f",
             "description": "Primary colour to use throughout."
         },
         "sc": {
             "id": "colour.secondary",
             "type": "color",
+            "default": "#1ab61a",
             "description": "Secondary colour to use throughout."
         },
         "fc": {
             "id": "colour.font",
             "type": "color",
-            "default": "#ffffff",
+            "default": "#000000",
             "description": "Colour to use for text."
         },
         "tt": {

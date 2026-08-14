@@ -25,6 +25,7 @@ function bindEvents(socket){
 
 window.onload = () => {
     config = new Config(window.location.search);
+    config.setColourStyles();
 
     websocket = new WebSocket("wss://metadata.aiir.net/now-playing");
     bindEvents(websocket);

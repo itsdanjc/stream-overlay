@@ -103,4 +103,24 @@ export class Config {
 
         ref[parts.at(-1)] = value;
     }
+
+    /**
+     * 
+     * @returns 
+     */
+    setColourStyles(){
+        if(!this.colour) return;
+
+        const colours = Object.entries(this.colour);
+        const styleSheetEl = document.createElement("style");
+        let rootStyle = "";
+        
+        for (const [rule, value] of colours){
+            if (value)
+                rootStyle += `--colour-${rule}: ${value};`;
+        }
+
+        styleSheetEl.innerHTML = `:root{${rootStyle}}`;
+        document.head.appendChild(styleSheetEl);
+    }
 }
