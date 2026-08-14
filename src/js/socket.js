@@ -100,8 +100,14 @@ export function onConnect(event, config){
  * @param {MessageEvent} event 
  */
 export async function onMessage(event){
-    const msgJson = JSON.parse(event.data);
-    const msg = Message(msgJson);
+    let msg = {};
+    try{
+        const msgJson = JSON.parse(event.data);
+        msg = Message(msgJson);
+    }
+    catch (e){
+        console.error(`Aiir returned: ${event.data}. Check your Service ID, and try again.`)
+    }
 
     if(cfg.useQR && msg.track){
         if(msg.track.appleMusicUrl){
