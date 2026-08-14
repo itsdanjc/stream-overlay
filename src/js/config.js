@@ -6,6 +6,7 @@
 import schema from "./schemas/v1.json" with { type: "json" };
 import { escapeURL } from "./format.js"
 import {
+    QueryParamConfigMap,
     decodeQueryParams,
     searchStringToObject,
     withDefault,
@@ -63,8 +64,9 @@ export class Config {
     }
 
     /**
-     * 
-     * @returns 
+     * Convert the json schema into a mapping object, 
+     * compatible with "serialize-query-params".
+     * @returns {QueryParamConfigMap} Mapping with functions for sterilization
      */
     static makeParamConfigMap(){
         const fields = Object.entries(schema.fields);
@@ -83,7 +85,8 @@ export class Config {
     }
 
     /**
-     * 
+     * Add a parameter to the configuration object.
+     * If the key provided contains ".", it will be treated as a tree structure.
      * @param {string} key 
      * @param {any} value 
      */
@@ -105,11 +108,11 @@ export class Config {
     }
 
     /**
-     * 
-     * @returns 
+     * Create a new `<style>` element and redefine CSS colour variables.
      */
     setColourStyles(){
-        if(!this.colour) return;
+        if(!this.colour)
+            throw new Error("No colour params defined. Cannot set colour scheme");
 
         const colours = Object.entries(this.colour);
         const styleSheetEl = document.createElement("style");

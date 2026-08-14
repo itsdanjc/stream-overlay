@@ -110,15 +110,12 @@ export class Card {
      * @returns {boolean} True if match, false otherwise.
      */
     isEqual(body){
-        // console.table(body)
-        // console.table(this.cardBody)
-        // console.log(body.thumbnail == this.cardBody.thumbnail)
         return (
             this.cardBody &&
             body.line_1 == this.cardBody.line_1 &&
             body.line_2 == this.cardBody.line_2 &&
             body.line_3 == this.cardBody.line_3 &&
-            body.thumbnail.href == this.cardBody.thumbnail.href
+            (body.thumbnail.toString() ?? null) == (this.cardBody.thumbnail.toString() ?? null)
         );
     }
 
